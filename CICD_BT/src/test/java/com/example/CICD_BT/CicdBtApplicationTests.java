@@ -8,6 +8,6 @@ public class CicdBtApplicationTests {
 
     @Test
     void contextLoads() {
+        // Test đơn giản kiểm tra context spring có load được không
     }
-
 }
