@@ -1,13 +1,13 @@
 package com.example.CICD_BT;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 
-@SpringBootTest
-class CicdBtApplicationTests {
+@SpringBootTest(classes = CicdBtApplication.class)
+public class CicdBtApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
