@@ -1,7 +1,6 @@
-package com.example.CICD_BT; // nếu đúng như thư mục thì phải thế này
+package com.example.CICD_BT;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+// các import như cũ
 
 @SpringBootApplication
 public class Application {
