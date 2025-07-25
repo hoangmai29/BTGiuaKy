@@ -25,3 +25,7 @@ pipeline {
     }
   }
 }
+tools {
+  git 'Git_windows'
+  maven 'Maven 3.9.11'
+}
