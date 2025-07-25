@@ -2,8 +2,8 @@ pipeline {
   agent any
 
   tools {
-    maven 'Maven 3.9.11'  // Tên Maven đã khai báo trong "Global Tool Configuration"
-    // jdk 'JDK_17'        // Nếu cần JDK, đảm bảo cấu hình trước trong Jenkins
+    git 'Git'  // Tên Git đã cấu hình trong Global Tool Configuration
+    maven 'Maven 3.9.11'  // Nếu bạn sử dụng Maven, đảm bảo đã cấu hình Maven tool tương tự
   }
 
   stages {
@@ -29,17 +29,10 @@ pipeline {
       }
     }
 
-    stage('Package') {
-      steps {
-        echo 'Packaging...'
-        // nếu muốn: sh 'mvn package'
-      }
-    }
-
     stage('Deploy') {
       steps {
         echo 'Deploying...'
-        // thêm code deploy nếu có
+        // Thêm lệnh deploy nếu cần
       }
     }
   }
