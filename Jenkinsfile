@@ -33,15 +33,16 @@ pipeline {
         }
       }
     }
-    stage('SonarQube Analysis') {
-      steps {
-        dir('CICD_BT') {
-          withSonarQubeEnv(SONARQUBE) {
-            sh 'mvn sonar:sonar'
-          }
-        }
+stage('SonarQube Analysis') {
+  steps {
+    dir('CICD_BT') {
+      withSonarQubeEnv(SONARQUBE) {
+        sh 'mvn sonar:sonar -X'
       }
     }
+  }
+}
+
     stage('Build Docker Image') {
       steps {
         sh 'docker build -t myapp:latest CICD_BT/'
