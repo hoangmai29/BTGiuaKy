@@ -52,14 +52,15 @@
             </plugin>
 
             <!-- Spring Boot plugin with correct mainClass -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <mainClass>com.example.CICD_BT.CicdBtApplication</mainClass>
-                </configuration>
-            </plugin>
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <version>3.2.5</version>
+    <configuration>
+        <mainClass>com.example.CICD_BT.CicdBtApplication</mainClass>
+    </configuration>
+</plugin>
+
         </plugins>
     </build>
 
