@@ -1,4 +1,4 @@
-package com.example.cicd_bt;
+package com.example.CICD_BT;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
