@@ -1,16 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>cicd_bt</artifactId>
+    <artifactId>CICD_BT</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>cicd_bt</name>
+    <name>CICD_BT</name>
     <description>Demo project for Spring Boot with CI/CD</description>
 
     <parent>
@@ -40,26 +40,27 @@
     </dependencies>
 
     <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
-          <configuration>
-            <skipTests>true</skipTests>
-          </configuration>
-        </plugin>
+        <plugins>
+            <!-- Optional: skip tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
 
-        <!-- Thêm plugin này để tạo executable jar với main class -->
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>3.2.5</version>
-            <configuration>
-                <mainClass>com.example.cicd_bt.CicdBtApplication</mainClass>
-            </configuration>
-        </plugin>
-      </plugins>
+            <!-- Spring Boot plugin with correct mainClass -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <mainClass>com.example.CICD_BT.CicdBtApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
