@@ -1,6 +1,6 @@
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY target/cicd_bt-0.0.1-SNAPSHOT.jar app.jar
+COPY target/CICD_BT-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
