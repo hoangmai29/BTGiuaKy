@@ -2,10 +2,9 @@ pipeline {
   agent any
   tools {
     maven 'Maven_3.9.11'
-    // jdk 'JDK_17' nếu cần
   }
   environment {
-    SONARQUBE = 'SonarQubeServer' // tên SonarQube config trong Jenkins
+    SONARQUBE = 'SonarQube' // trùng tên trong Jenkins config
   }
   stages {
     stage('Checkout') {
@@ -30,7 +29,7 @@ pipeline {
       }
       post {
         always {
-          junit 'CICD_BT/target/surefire-reports/*.xml' // báo cáo test
+          junit 'CICD_BT/target/surefire-reports/*.xml'
         }
       }
     }
@@ -50,7 +49,6 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        // ví dụ ssh deploy lên server public, bạn chỉnh theo server thực tế
         sh 'ssh user@server "cd /path/to/docker-compose && docker-compose up -d --build"'
       }
     }
