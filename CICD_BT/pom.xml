@@ -9,7 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>cicd_bt</name>
+    <name>CICD_BT</name>
     <description>Demo project for Spring Boot with CI/CD</description>
 
     <parent>
