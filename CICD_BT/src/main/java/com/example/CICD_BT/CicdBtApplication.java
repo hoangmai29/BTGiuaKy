@@ -1,4 +1,4 @@
-package com.example.CICD_BT;
+package com.example.cicd_bt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
