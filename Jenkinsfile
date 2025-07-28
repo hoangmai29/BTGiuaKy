@@ -1,9 +1,10 @@
 pipeline {
   agent any
 
-  tools {
-    maven 'Maven_3.9.1' // Phải trùng với tên bạn đặt trong Global Tool Configuration
-  }
+tools {
+  maven 'Maven 3.9.11'  // đúng tên bạn đã đặt
+}
+
 
   environment {
     SONARQUBE = 'SonarQube' // Phải trùng với tên cấu hình SonarQube trong Jenkins
