@@ -1,9 +1,10 @@
 pipeline {
   agent any
 
-  tools {
-    maven 'Maven_3.9.11'
-  }
+tools {
+    maven 'Maven 3.9.11'  // 👈 Dùng đúng tên như trong Jenkins
+}
+
 
   environment {
     SONARQUBE = 'SonarQube'
