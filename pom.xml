@@ -41,24 +41,23 @@
 
     <build>
         <plugins>
-            <!-- Test plugin -->
+            <!-- Maven Surefire Plugin for Unit Tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <!-- Không được skip test -->
                     <skipTests>false</skipTests>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
 
-            <!-- Spring Boot plugin -->
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <!-- Chỉnh đúng mainClass theo package -->
                     <mainClass>com.example.cicd_bt.CicdBtApplication</mainClass>
                 </configuration>
             </plugin>
