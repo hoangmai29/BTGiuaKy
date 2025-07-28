@@ -22,9 +22,9 @@ tools {
 
     stage('Build') {
       steps {
-        withMaven(maven: 'Maven_3.9.11') {
-          sh 'mvn clean install'
-        }
+        withMaven(maven: 'Maven 3.8.1') {
+    sh 'mvn clean package'
+}
       }
     }
 
