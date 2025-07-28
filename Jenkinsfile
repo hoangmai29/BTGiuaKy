@@ -2,15 +2,14 @@ pipeline {
   agent any
 
   tools {
-    maven 'Maven_3.9.11'  // Đảm bảo đã cấu hình trong Jenkins global tool config
+    maven 'Maven_3.9.11'
   }
 
   environment {
-    SONARQUBE = 'SonarQube'  // Trùng với cấu hình SonarQube trong Jenkins
+    SONARQUBE = 'SonarQube'
   }
 
   stages {
-
     stage('Checkout') {
       steps {
         git url: 'https://github.com/hoangmai29/BTGiuaKy.git', branch: 'main'
@@ -38,7 +37,7 @@ pipeline {
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv(SONARQUBE) {
+        withSonarQubeEnv('SonarQube') {
           sh 'mvn sonar:sonar'
         }
       }
@@ -50,27 +49,16 @@ pipeline {
       }
     }
 
-    stage('Deploy Local (Docker Compose)') {
+    stage('Deploy Local') {
       steps {
         sh 'docker-compose down && docker-compose up -d --build'
       }
     }
-
-    stage('Deploy to Server') {
-      steps {
-        sshagent(['ssh-key-id']) {
-          sh '''
-          ssh user@your-server-ip "cd /home/user/library && git pull && docker-compose down && docker-compose up -d"
-          '''
-        }
-      }
-    }
-
   }
 
   post {
     always {
-      echo '✅ Pipeline finished!'
+      echo '✅ CI/CD pipeline hoàn thành trên máy local!'
     }
   }
 }
