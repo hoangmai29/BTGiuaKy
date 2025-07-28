@@ -7,9 +7,9 @@ pipeline {
 
   environment {
     SONARQUBE = 'SonarQube'
-    REMOTE_HOST = 'your.server.ip.or.hostname'       // <- cập nhật lại
-    REMOTE_USER = 'your-ssh-username'                // <- cập nhật lại
-    REMOTE_PATH = '/home/your-ssh-username/app'      // <- cập nhật lại
+    REMOTE_HOST = '192.168.56.101'           // <-- Nhập IP của máy Ubuntu/VPS
+    REMOTE_USER = 'ubuntu'                   // <-- Nhập username SSH (ví dụ: ubuntu hoặc root)
+    REMOTE_PATH = '/home/ubuntu/app'         // <-- Thư mục để deploy code trên server
   }
 
   stages {
@@ -54,19 +54,24 @@ pipeline {
 
     stage('Deploy Local') {
       steps {
-        sh 'docker-compose down && docker-compose up -d --build'
+        sh 'docker-compose down || true'
+        sh 'docker-compose up -d --build'
       }
     }
 
-    stage('Deploy to Server via SSH') {
+    stage('Deploy to Remote Server via SSH') {
       steps {
         sshagent (credentials: ['my-ssh-key']) {
           sh """
             ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
               mkdir -p ${REMOTE_PATH} &&
               cd ${REMOTE_PATH} &&
-              git clone https://github.com/hoangmai29/BTGiuaKy.git . || git pull &&
-              docker-compose down &&
+              if [ ! -d ".git" ]; then
+                git clone https://github.com/hoangmai29/BTGiuaKy.git .;
+              else
+                git pull;
+              fi &&
+              docker-compose down || true &&
               docker-compose up -d --build
             '
           """
