@@ -1,15 +1,12 @@
-tools {
-  maven 'Maven 3.9.11'  // Tên đúng với Global Tool Config
-}
-
 pipeline {
   agent any
 
   environment {
-    SONARQUBE = 'SonarQube' // Trùng với config trong Jenkins
+    SONARQUBE = 'SonarQube' // Tên cấu hình SonarQube đã setup trong Jenkins
     REMOTE_HOST = 'your.server.ip.or.hostname'
     REMOTE_USER = 'your-ssh-username'
     REMOTE_PATH = '/home/your-ssh-username/app'
+    MAVEN_HOME = '' // sẽ được gán trong bước Build
   }
 
   stages {
@@ -21,14 +18,16 @@ pipeline {
 
     stage('Build') {
       steps {
-        // Dùng bat nếu chạy trên Windows agent
-        bat 'mvn clean install'
+        script {
+          MAVEN_HOME = tool name: 'Maven 3.9.11', type: 'hudson.tasks.Maven$MavenInstallation'
+        }
+        bat "${MAVEN_HOME}\\bin\\mvn clean install"
       }
     }
 
     stage('Test') {
       steps {
-        bat 'mvn test'
+        bat "${MAVEN_HOME}\\bin\\mvn test"
       }
       post {
         always {
@@ -40,7 +39,7 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv("${SONARQUBE}") {
-          bat 'mvn sonar:sonar'
+          bat "${MAVEN_HOME}\\bin\\mvn sonar:sonar"
         }
       }
     }
@@ -53,8 +52,7 @@ pipeline {
 
     stage('Deploy Local') {
       steps {
-        bat 'docker-compose down'
-        bat 'docker-compose up -d --build'
+        bat 'docker-compose down && docker-compose up -d --build'
       }
     }
 
@@ -63,9 +61,11 @@ pipeline {
         sshagent (credentials: ['my-ssh-key']) {
           bat """
             ssh -o StrictHostKeyChecking=no %REMOTE_USER%@%REMOTE_HOST% ^
-              "mkdir -p %REMOTE_PATH% && cd %REMOTE_PATH% && ^
-               if [ ! -d .git ]; then git clone https://github.com/hoangmai29/BTGiuaKy.git .; else git pull; fi && ^
-               docker-compose down && docker-compose up -d --build"
+              "mkdir -p %REMOTE_PATH% && ^
+               cd %REMOTE_PATH% && ^
+               git clone https://github.com/hoangmai29/BTGiuaKy.git . || git pull && ^
+               docker-compose down && ^
+               docker-compose up -d --build"
           """
         }
       }
