@@ -1,0 +1,20 @@
+package com.example.cicd_bt;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@SpringBootTest
+class CicdBtApplicationTests {
+
+    @Test
+    void testAddition() {
+        int sum = 2 + 3;
+        assertEquals(5, sum, "2 + 3 phải bằng 5");
+    }
+
+    @Test
+    void contextLoads() {
+    }
+}
