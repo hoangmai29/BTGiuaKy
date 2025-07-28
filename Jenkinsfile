@@ -2,14 +2,14 @@ pipeline {
   agent any
 
   tools {
-    maven 'Maven 3.9.11'
+    maven 'Maven_3.9.1' // Phải trùng với tên bạn đặt trong Global Tool Configuration
   }
 
   environment {
-    SONARQUBE = 'SonarQube'                         // Tên server đã cấu hình trong Jenkins
-    REMOTE_HOST = 'your.server.ip.or.hostname'     
-    REMOTE_USER = 'your-ssh-username'              
-    REMOTE_PATH = '/home/your-ssh-username/app'    
+    SONARQUBE = 'SonarQube' // Phải trùng với tên cấu hình SonarQube trong Jenkins
+    REMOTE_HOST = 'your.server.ip.or.hostname'
+    REMOTE_USER = 'your-ssh-username'
+    REMOTE_PATH = '/home/your-ssh-username/app'
   }
 
   stages {
@@ -21,15 +21,13 @@ pipeline {
 
     stage('Build') {
       steps {
-        withMaven(maven: 'Maven 3.9.11') {
-          bat 'mvn clean install'
-        }
+        bat 'mvn clean install'
       }
     }
 
     stage('Test') {
       steps {
-        sh 'mvn test'
+        bat 'mvn test'
       }
       post {
         always {
@@ -38,38 +36,36 @@ pipeline {
       }
     }
 
-stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('SonarQube') {
-            bat "mvn sonar:sonar"
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv("${SONARQUBE}") {
+          bat 'mvn sonar:sonar'
         }
+      }
     }
-}
-
 
     stage('Build Docker Image') {
       steps {
-        sh 'docker build -t library-management:latest .'
+        bat 'docker build -t library-management:latest .'
       }
     }
 
     stage('Deploy Local') {
       steps {
-        sh 'docker-compose down && docker-compose up -d --build'
+        bat 'docker-compose down && docker-compose up -d --build'
       }
     }
 
-    stage('Deploy to Remote Server via SSH') {
+    stage('Deploy to Server via SSH') {
       steps {
         sshagent (credentials: ['my-ssh-key']) {
-          sh """
-            ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
-              mkdir -p ${REMOTE_PATH} &&
-              cd ${REMOTE_PATH} &&
-              git clone https://github.com/hoangmai29/BTGiuaKy.git . || git pull &&
-              docker-compose down &&
-              docker-compose up -d --build
-            '
+          bat """
+            ssh -o StrictHostKeyChecking=no %REMOTE_USER%@%REMOTE_HOST% ^
+              "mkdir -p %REMOTE_PATH% && ^
+               cd %REMOTE_PATH% && ^
+               git clone https://github.com/hoangmai29/BTGiuaKy.git . || git pull && ^
+               docker-compose down && ^
+               docker-compose up -d --build"
           """
         }
       }
