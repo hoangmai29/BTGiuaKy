@@ -38,14 +38,14 @@ pipeline {
       }
     }
 
-    // ✅ PHÂN TÍCH VỚI SONARQUBE
-    stage('SonarQube Analysis') {
-      steps {
-        withSonarQubeEnv("${SONARQUBE}") {
-          sh 'mvn sonar:sonar'
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            bat "mvn sonar:sonar"
         }
-      }
     }
+}
+
 
     stage('Build Docker Image') {
       steps {
